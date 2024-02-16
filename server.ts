@@ -1,8 +1,11 @@
 import express, { Response, Request, NextFunction } from 'express';
 import { config } from './constants/config';
+import { ApodController } from './controllers/ApodController';
+import { ImagesSearchController } from './controllers/ImagesSearchController';
 import { NEOController } from './controllers/NEOController';
 
-
+const apodController = new ApodController();
+const imagesSearchController = new ImagesSearchController();
 const app = express();
 
 const neoController = new NEOController();
@@ -10,6 +13,22 @@ const neoController = new NEOController();
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.send('Vous êtes sur la page d\'accueil de l\'API de la Nasa');
+});
+
+app.get('/apod', (req: Request, res: Response, next: NextFunction) => {
+    const response = apodController.getApodToday(req, res, next);
+});
+
+app.get('/apod/:date', (req: Request, res: Response, next: NextFunction) => {
+    const response = apodController.getApod(req, res, next);
+});
+
+app.get('/apod/count/:count', (req: Request, res: Response, next: NextFunction) => {
+    const response = apodController.getApodByCount(req, res, next);
+});
+
+app.get('/images/:search', (req: Request, res: Response, next: NextFunction) => {
+    const response = imagesSearchController.getImages(req, res, next);
 });
 
 app.get('/neo/:startDate/:endDate', (req: Request, res: Response, next: NextFunction) => {
