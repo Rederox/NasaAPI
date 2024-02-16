@@ -46,6 +46,17 @@ export class ApodController {
             res.status(500).send("Erreur lors de la récupération de l'apod");
         }
     }
+
+    public async getApodByCount(req: Request, res: Response, next: NextFunction) {
+        const count = req.params.count;
+        try {
+            const response: AxiosResponse<Apod[]> = await axios.get(`${url.APOD}&count=${count}`);
+            const apodData : Apod[] = response.data;
+            res.status(200).send(apodData);
+        } catch (error) {
+            res.status(500).send("Erreur lors de la récupération de l'apod");
+        }
+    }
 }
 
 

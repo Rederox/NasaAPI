@@ -20,6 +20,10 @@ app.get('/apod/:date', (req: Request, res: Response, next: NextFunction) => {
     const response = apodController.getApod(req, res, next);
 });
 
+app.get('/apod/count/:count', (req: Request, res: Response, next: NextFunction) => {
+    const response = apodController.getApodByCount(req, res, next);
+});
+
 app.get('/images/:search', (req: Request, res: Response, next: NextFunction) => {
     const response = imagesSearchController.getImages(req, res, next);
 });
