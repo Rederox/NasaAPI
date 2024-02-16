@@ -12,7 +12,7 @@ const app = express();
 
 const neoController = new NEOController();
 
-app.use(errorHandler);
+
 
 app.use(logRequest);
 app.use(logResponse);
@@ -60,8 +60,12 @@ app.get('/neo/:startDate/:endDate', (req: Request, res: Response, next: NextFunc
 
 app.get('/neo', (req: Request, res: Response, next: NextFunction) => {
     neoController.getNEOToday(req, res, next);
+
 });
+
+app.use(errorHandler);
 
 app.listen(config.PORT, () => {
     console.log(`Le serveur est lancée sur l'url : http://localhost:${config.PORT}`);
 });
+

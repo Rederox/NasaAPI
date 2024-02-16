@@ -1,11 +1,13 @@
 import { errorsCodes } from "../constants/errorsCodes";
 
 export class CustomError extends Error {
-private errorcode: number;
+  errorcode: number;
 
-  constructor(message: string, errorcode: number) {
-    super(message);
-    this.name = errorsCodes.CUSTOM_ERROR_NAME;
-    this.errorcode = errorsCodes.CUSTOM_ERROR_CODE;
+  constructor(message: string,
+    errorcode: number = errorsCodes.CUSTOM_ERROR_CODE,
+    name: string = errorsCodes.CUSTOM_ERROR_NAME) {
+      super(message);
+      this.name = name;
+      this.errorcode = errorcode;
   }
 }

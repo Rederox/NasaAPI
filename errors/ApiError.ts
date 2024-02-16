@@ -1,12 +1,9 @@
 import { CustomError } from "./CustomError";
-import { errorsCodes } from "../constantes/errorsCodes";
-import { logMessage } from "../constantes/logMessage";
-import { errorLogger } from "../logs/logger";
+import { errorsCodes } from "../constants/errorsCodes";
 
 export class ApiError extends CustomError {
     constructor(message: string) {
-        super(message, errorsCodes.API_ERROR_CODE);
+        super(message, errorsCodes.API_ERROR_CODE, errorsCodes.API_ERROR_NAME);
         this.name = errorsCodes.API_ERROR_NAME;
-        errorLogger.error(`${logMessage.API_ERROR}, ${message}`);
     }
 }
