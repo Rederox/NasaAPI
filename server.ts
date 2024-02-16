@@ -9,19 +9,22 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerOptions } from './swaggerOptions';
 
+
+// Initialisation des contrôleurs pour les différentes parties de l'API.
 const apodController = new ApodController();
 const imagesSearchController = new ImagesSearchController();
-const app = express();
-
 const neoController = new NEOController();
 
+// Création de l'application Express
+const app = express();
 
 
+// Middleware pour logger les requêtes entrantes et les réponses sortantes
 app.use(logRequest);
 app.use(logResponse);
 
 
-
+// Endpoint racine qui fournit des informations sur les différents endpoints de l'API.
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
     const response = {
         message: 'Bienvenue sur l\'API de la Nasa',
@@ -61,36 +64,46 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.send(response);
 });
 
+// Définition des endpoints pour l'API, en utilisant les contrôleurs appropriés.
+// Endpoint pour récupérer l'APOD du jour.
 app.get('/apod', (req: Request, res: Response, next: NextFunction) => {
-    const response = apodController.getApodToday(req, res, next);
+    apodController.getApodToday(req, res, next);
 });
 
+// Endpoint pour récupérer l'APOD pour une date spécifique.
 app.get('/apod/:date', (req: Request, res: Response, next: NextFunction) => {
-    const response = apodController.getApod(req, res, next);
+    apodController.getApod(req, res, next);
 });
 
+// Endpoint pour récupérer les APOD pour un nombre spécifique.
 app.get('/apod/count/:count', (req: Request, res: Response, next: NextFunction) => {
-    const response = apodController.getApodByCount(req, res, next);
+    apodController.getApodByCount(req, res, next);
 });
 
+// Endpoint pour récupérer les images correspondant à une recherche spécifique.
 app.get('/images/:search', (req: Request, res: Response, next: NextFunction) => {
-    const response = imagesSearchController.getImages(req, res, next);
+    imagesSearchController.getImages(req, res, next);
 });
 
+// Endpoint pour récupérer les NEO pour une période spécifique.
 app.get('/neo/:startDate/:endDate', (req: Request, res: Response, next: NextFunction) => {
     neoController.getNEO(req, res, next);
 });
 
+// Endpoint pour récupérer les NEO du jour.
 app.get('/neo', (req: Request, res: Response, next: NextFunction) => {
     neoController.getNEOToday(req, res, next);
 
 });
 
+// Configuration et mise en place de Swagger UI pour la documentation de l'API.
 const specs = swaggerJSDoc(swaggerOptions);
 app.use('/swagger-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+// Middleware global pour la gestion des erreurs.
 app.use(errorHandler);
 
+// Démarrage du serveur sur le port configuré.
 app.listen(config.PORT, () => {
     console.log(`Le serveur est lancée sur l'url : http://localhost:${config.PORT}`);
 });
