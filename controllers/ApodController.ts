@@ -6,7 +6,8 @@ import { Apod } from "../interfaces/Apod";
 export class ApodController {
     public async getApod(req: Request, res: Response, next: NextFunction) {
         try {
-            const response: AxiosResponse = await axios.get(`${url.APOD}`);
+            const response: AxiosResponse = await axios.get(url.APOD);
+            
             const apodData : Apod = {
                 copyright: response.data.copyright,
                 title: response.data.title,
@@ -17,9 +18,9 @@ export class ApodController {
                 service_version: response.data.service_version,
                 url: response.data.url,
             }
-            res.status(200).json(apodData);
+            res.status(200).send(apodData);
         } catch (error) {
-            res.status(500).json({ message: error.message });
+            res.status(500).send("Erreur lors de la récupération de l'apod");
         }
     }
 }
