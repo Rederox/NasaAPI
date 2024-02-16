@@ -3,8 +3,43 @@ import { NextFunction, Request, Response } from 'express';
 import { url } from '../constants/url';
 import { SimplifiedNeoData } from '../interfaces/NEO';
 
+/**
+ * @swagger
+ * tags:
+ *  name: Neo
+ *  description: Near Earth Object
+ */
 
 export class NEOController {
+
+    /**
+     * @swagger
+     *  /neo/{startDate}/{endDate}:
+     *   get:
+     *     summary: Récupère les NEO pour une période spécifique.
+     *     description: Récupère les NEO pour une période spécifique.
+     *     tags: [Neo]
+     *     parameters:
+     *       - name: startDate
+     *         in: path
+     *         required: true
+     *         description: La date de début de la période (format YYYY-MM-DD).
+     *         schema:
+     *           type: string
+     *           format: date
+     *       - name: endDate
+     *         in: path
+     *         required: true
+     *         description: La date de fin de la période (format YYYY-MM-DD).
+     *         schema:
+     *           type: string
+     *           format: date
+     *     responses:
+     *       '200':
+     *         description: APOD récupéré avec succès.
+     *         content:
+     *           
+    */
 
     public async getNEO(req: Request, res: Response, next: NextFunction): Promise<void> { // TODO: add limit 7 days
         try {
@@ -28,7 +63,21 @@ export class NEOController {
         } catch (error) {
             res.status(500).json({ message: error });
         }
-    }
+    }  
+
+    /**
+     * @swagger
+     *  /neo:
+     *   get:
+     *     summary: Récupère les NEO d'aujourd'hui.
+     *     description: Récupère les NEO d'aujourd'hui.
+     *     tags: [Neo]
+     *     responses:
+     *       '200':
+     *         description: NEO récupéré avec succès.
+     *         content:
+     *           
+    */
 
     public async getNEOToday(req: Request, res: Response, next: NextFunction): Promise<void> { // TODO: add limit 7 days
         try {
