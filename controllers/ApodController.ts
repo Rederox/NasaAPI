@@ -5,6 +5,7 @@ import { Apod } from "../interfaces/Apod";
 import { ApiError } from "../errors/ApiError";
 import { NotIntegerError } from "../errors/NotIntegerError";
 import { errorsCodes } from "../constants/errorsCodes";
+import { DataCheck } from "../dataCheckers/dataCheck";
 
 /**
  * @swagger
@@ -72,6 +73,9 @@ export class ApodController {
 
     public async getApod(req: Request, res: Response, next: NextFunction) {
         const date = req.params.date;
+
+        DataCheck.checkDate(date, next);
+
         try {
             const response: AxiosResponse = await axios.get(`${url.APOD}&date=${date}`);
             
@@ -116,15 +120,16 @@ export class ApodController {
     */
 
     public async getApodByCount(req: Request, res: Response, next: NextFunction) {
-        const count = req.params.count;
+        const count : number = Number(req.params.count);
+
+        DataCheck.checkInteger(count, next);
+
         try {
-            if (isNaN(Number(count))) {
-                next(new NotIntegerError(errorsCodes.NOT_INTEGER_ERROR_MESSAGE));
-            }else{
-                const response: AxiosResponse<Apod[]> = await axios.get(`${url.APOD}&count=${count}`);
-                const apodData : Apod[] = response.data;
-                res.status(200).send(apodData);
-            }            
+            
+            const response: AxiosResponse<Apod[]> = await axios.get(`${url.APOD}&count=${count}`);
+            const apodData : Apod[] = response.data;
+            res.status(200).send(apodData);
+              
         } catch (error) {
             next(new ApiError(errorsCodes.API_ERROR_MESSAGE));
         }
