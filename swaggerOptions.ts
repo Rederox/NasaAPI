@@ -4,9 +4,9 @@ export const swaggerOptions = {
     swaggerDefinition: {
         openapi: "3.0.0",
         info: {
-            title: "API Météo",
+            title: "API NASA",
             version: "1.0.0",
-            description: "Documentation de l'API Météo",
+            description: "Documentation de l'API NASA",
         },
         servers: [
             {

@@ -5,7 +5,7 @@ export const errorsCodes = {
 
     API_ERROR_CODE : 2000,
     API_ERROR_NAME : "Api error",
-    API_ERROR_MESSAGE : "Erreur lors de la récupération de la météo",
+    API_ERROR_MESSAGE : "Erreur lors de la récupération des données de l'API",
 
     DATABASE_ERROR_CODE : 2001,
     DATABASE_ERROR_NAME : "Database error",

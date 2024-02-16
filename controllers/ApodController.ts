@@ -25,7 +25,7 @@ export class ApodController {
      *      tags: [Apod]
      *      responses:
      *         200:
-     *          description: La météo actuelle
+     *          description: APOD récupéré avec succès.
      *          content:
      */
 
