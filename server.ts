@@ -13,6 +13,10 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.get('/apod', (req: Request, res: Response, next: NextFunction) => {
+    const response = apodController.getApodToday(req, res, next);
+});
+
+app.get('/apod/:date', (req: Request, res: Response, next: NextFunction) => {
     const response = apodController.getApod(req, res, next);
 });
 

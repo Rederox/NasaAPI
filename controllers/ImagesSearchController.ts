@@ -1,16 +1,19 @@
-import { NextFunction, Request, Response } from "express";
+import e, { NextFunction, Request, Response } from "express";
 import axios, {AxiosResponse} from "axios";
 import { url } from "../constants/url";
+import { ImagesSearch } from "../interfaces/ImagesSearch";
 
 export class ImagesSearchController {
     public async getImages(req: Request, res: Response, next: NextFunction) {
+        const search = req.params.search;
         try {
-            const search = req.params.search;
-            const response: AxiosResponse = await axios.get(url.IMAGES + search);
-
-            res.status(200).send(response.data);
+            const response = await axios.get<ImagesSearch>(`${url.IMAGES}${search}`);
+            const imagesSearch: ImagesSearch = response.data;
+            res.status(200).send(imagesSearch.collection.items);
+            
         } catch (error) {
-            res.status(500).send("Erreur lors de la récupération des images");
+            console.error(error);
+            res.status(500).send("error");
         }
     }
 }
