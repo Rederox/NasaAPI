@@ -98,7 +98,7 @@ export class ApodController {
      * @swagger
      *  /apod/count/{count}:
      *   get:
-     *     summary: Récupération de plusieurs APOD.
+     *     summary: Récupération de plusieurs APOD aléatoire.
      *     description: Récupération de plusieurs APOD.
      *     tags: [Apod]
      *     parameters:

@@ -17,8 +17,8 @@ export class ImagesSearchController {
      * @swagger
      *  /images/{search}:
      *   get:
-     *     summary: Récupération des images pour une recherche spécifique.
-     *     description: Récupération des images pour une recherche spécifique.
+     *     summary: Récupération des images de la bdd de NASA .
+     *     description: Recherche d'images.
      *     tags: [Images]
      *     parameters:
      *       - name: search

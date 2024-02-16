@@ -27,14 +27,33 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
         message: 'Bienvenue sur l\'API de la Nasa',
         endpoints: {
             apod: {
-                today: '/apod',
-                byDate: '/apod/2024-01-16',
-                count: '/apod/count/3'
+                today : {
+                    url: '/apod',
+                    description : 'Récupère l\'APOD (Astronomy Picture of the Day) du jour'
+                },
+                byDate: {
+                    url : '/apod/2024-01-16',
+                    description: 'Récupère l\'APOD (Astronomy Picture of the Day) pour une date spécifique'
+                },
+                byCount: {
+                    url: '/apod/count/3',
+                    description: 'recupère les APOD (Astronomy Picture of the Day) aléatoire pour un nombre spécifique'
+                },
             },
-            images: '/images/asteroide',
+            images: {
+                url :'/images/asteroide',
+                description: 'Récupère les images correspondant à la recherche'
+            },
             neo: {
-                today: '/neo',
-                byDate: '/neo/2024-01-16/2024-01-17'
+                today: {
+                    url: '/neo', 
+                    description: 'Récupère les NEO (Near Earth Object) du jour'
+                },               
+                byDate: {
+                    url: '/neo/2024-01-16/2024-01-17',
+                    description: 'Récupère les NEO (Near Earth Object) pour une période spécifique'
+
+                }
             },
             swagger: '/swagger-docs'
         }
