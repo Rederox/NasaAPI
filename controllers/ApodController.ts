@@ -27,7 +27,6 @@ export class ApodController {
     public async getApod(req: Request, res: Response, next: NextFunction) {
         const date = req.params.date;
         try {
-            console.log(`${url.APOD}?date=${date}`);
             const response: AxiosResponse = await axios.get(`${url.APOD}&date=${date}`);
             
             

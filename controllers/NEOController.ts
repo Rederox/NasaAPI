@@ -6,7 +6,7 @@ import { SimplifiedNeoData } from '../interfaces/NEO';
 
 export class NEOController {
 
-    public async getNEO(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async getNEO(req: Request, res: Response, next: NextFunction): Promise<void> { // TODO: add limit 7 days
         try {
             const startDate: string = req.params.startDate;
             const endDate: string = req.params.endDate;
@@ -30,7 +30,7 @@ export class NEOController {
         }
     }
 
-    public async getNEOToday(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async getNEOToday(req: Request, res: Response, next: NextFunction): Promise<void> { // TODO: add limit 7 days
         try {
             const startDate: string = new Date().toISOString().split('T')[0];
             const endDate: string = new Date().toISOString().split('T')[0];

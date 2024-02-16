@@ -12,7 +12,22 @@ const neoController = new NEOController();
 
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
-    res.send('Vous êtes sur la page d\'accueil de l\'API de la Nasa');
+    const response = {
+        message: 'Bienvenue sur l\'API de la Nasa',
+        endpoints: {
+            apod: {
+                today: '/apod',
+                byDate: '/apod/2024-01-16',
+                count: '/apod/count/3'
+            },
+            images: '/images/asteroide',
+            neo: {
+                today: '/neo',
+                byDate: '/neo/2024-01-16/2024-01-17'
+            }
+        }
+    }
+    res.send(response);
 });
 
 app.get('/apod', (req: Request, res: Response, next: NextFunction) => {
