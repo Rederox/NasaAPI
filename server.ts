@@ -3,6 +3,8 @@ import { config } from './constants/config';
 import { ApodController } from './controllers/ApodController';
 import { ImagesSearchController } from './controllers/ImagesSearchController';
 import { NEOController } from './controllers/NEOController';
+import { errorHandler } from './middlewares/errorHandler';
+import { logRequest, logResponse } from './middlewares/logHandler';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerOptions } from './swaggerOptions';
@@ -12,6 +14,12 @@ const imagesSearchController = new ImagesSearchController();
 const app = express();
 
 const neoController = new NEOController();
+
+
+
+app.use(logRequest);
+app.use(logResponse);
+
 
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
@@ -56,11 +64,15 @@ app.get('/neo/:startDate/:endDate', (req: Request, res: Response, next: NextFunc
 
 app.get('/neo', (req: Request, res: Response, next: NextFunction) => {
     neoController.getNEOToday(req, res, next);
+
 });
 
 const specs = swaggerJSDoc(swaggerOptions);
 app.use('/swagger-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+app.use(errorHandler);
+
 app.listen(config.PORT, () => {
     console.log(`Le serveur est lancée sur l'url : http://localhost:${config.PORT}`);
 });
+

@@ -2,6 +2,8 @@ import axios, { AxiosResponse } from 'axios';
 import { NextFunction, Request, Response } from 'express';
 import { url } from '../constants/url';
 import { SimplifiedNeoData } from '../interfaces/NEO';
+import { ApiError } from '../errors/ApiError';
+import { errorsCodes } from '../constants/errorsCodes';
 
 /**
  * @swagger
@@ -61,7 +63,7 @@ export class NEOController {
 
             res.status(200).json(simplifiedNeos);
         } catch (error) {
-            res.status(500).json({ message: error });
+            next(new ApiError(errorsCodes.API_ERROR_MESSAGE));
         }
     }  
 
@@ -99,7 +101,7 @@ export class NEOController {
 
             res.status(200).json(simplifiedNeos);
         } catch (error) {
-            res.status(500).json({ message: error });
+            next(new ApiError(errorsCodes.API_ERROR_MESSAGE));
         }
     }
 }
