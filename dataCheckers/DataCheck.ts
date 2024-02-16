@@ -2,6 +2,7 @@ import { IncorrectDateError } from "../errors/IncorrectDateError";
 import { NotIntegerError } from "../errors/NotIntegerError";
 import { errorsCodes } from "../constants/errorsCodes";
 import { NextFunction } from "express";
+import { CustomError } from "../errors/CustomError";
 
 export class DataCheck{
 
@@ -17,5 +18,12 @@ export class DataCheck{
             next(new NotIntegerError(errorsCodes.NOT_INTEGER_ERROR_MESSAGE));
         }
     }
+
+    public static checkParametersMissing(parameters: string[], next : NextFunction): void {
+        if(parameters.includes('')) {
+            next(new CustomError(errorsCodes.PARMETERS_MISSING_ERROR_MESSAGE, errorsCodes.PARMETERS_MISSING_ERROR_CODE, errorsCodes.PARMETERS_MISSING_ERROR_NAME));
+        }
+    }
+
 }
 

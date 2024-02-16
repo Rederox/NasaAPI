@@ -5,6 +5,7 @@ import { SimplifiedNeoData } from '../interfaces/NEO';
 import { ApiError } from '../errors/ApiError';
 import { errorsCodes } from '../constants/errorsCodes';
 import { CustomError } from '../errors/CustomError';
+import { DataCheck } from '../dataCheckers/dataCheck';
 
 /**
  * @swagger
@@ -45,18 +46,17 @@ export class NEOController {
     */
 
     public async getNEO(req: Request, res: Response, next: NextFunction): Promise<void> { // Récupère les NEO pour une période spécifique
+        const startDate: string = req.params.startDate;
+        const endDate: string = req.params.endDate;
+
+        DataCheck.checkDate(startDate, next);
+        DataCheck.checkDate(endDate, next);
+
+        if(new Date(endDate).getTime() - new Date(startDate).getTime() > 7 * 24 * 60 * 60 * 1000){
+            next(new CustomError(errorsCodes.DATE_LIMIT_ERROR_MESSAGE, errorsCodes.DATE_LIMIT_ERROR_CODE, errorsCodes.DATE_LIMIT_ERROR_NAME));
+        }
+        
         try {
-            const startDate: string = req.params.startDate;
-            const endDate: string = req.params.endDate;
-
-            if(startDate === '' || endDate === ''){ 
-                next(new CustomError(errorsCodes.PARMETERS_MISSING_ERROR_MESSAGE, errorsCodes.PARMETERS_MISSING_ERROR_CODE, errorsCodes.PARMETERS_MISSING_ERROR_NAME));
-            }
-
-            if(new Date(endDate).getTime() - new Date(startDate).getTime() > 7 * 24 * 60 * 60 * 1000){
-                next(new CustomError(errorsCodes.DATE_LIMIT_ERROR_MESSAGE, errorsCodes.DATE_LIMIT_ERROR_CODE, errorsCodes.DATE_LIMIT_ERROR_NAME));
-            }
-
             const response: AxiosResponse = await axios.get(url.NEO + `&start_date=${startDate}&end_date=${endDate}`);
             const neos = response.data.near_earth_objects[startDate];
             const simplifiedNeos: SimplifiedNeoData[] = neos.map((neo: any) => ({
@@ -92,14 +92,10 @@ export class NEOController {
     */
 
     public async getNEOToday(req: Request, res: Response, next: NextFunction): Promise<void> {
+        const startDate: string = new Date().toISOString().split('T')[0];
+        const endDate: string = new Date().toISOString().split('T')[0];
+        
         try {
-            const startDate: string = new Date().toISOString().split('T')[0];
-            const endDate: string = new Date().toISOString().split('T')[0];
-            
-            if(new Date(endDate).getTime() - new Date(startDate).getTime() > 7 * 24 * 60 * 60 * 1000){
-                next(new CustomError(errorsCodes.DATE_LIMIT_ERROR_MESSAGE, errorsCodes.DATE_LIMIT_ERROR_CODE, errorsCodes.DATE_LIMIT_ERROR_NAME));
-            }
-
             const response: AxiosResponse = await axios.get(url.NEO + `&start_date=${startDate}&end_date=${endDate}`);
             const neos = response.data.near_earth_objects[startDate];
             const simplifiedNeos: SimplifiedNeoData[] = neos.map((neo: any) => ({

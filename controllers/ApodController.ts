@@ -79,7 +79,6 @@ export class ApodController {
         try {
             const response: AxiosResponse = await axios.get(`${url.APOD}&date=${date}`);
             
-            
             const apodData : Apod = {
                 copyright: response.data.copyright,
                 title: response.data.title,
