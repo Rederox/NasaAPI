@@ -14,4 +14,8 @@ export const errorsCodes = {
     NOT_INTEGER_ERROR_CODE : 2002,
     NOT_INTEGER_ERROR_NAME : "Not integer error",
     NOT_INTEGER_ERROR_MESSAGE : "La valeur n'est pas un entier",
+
+    INCORRECT_DATE_ERROR_CODE : 2003,
+    INCORRECT_DATE_ERROR_NAME : "Incorrect date error",
+    INCORRECT_DATE_ERROR_MESSAGE : "La date n'est pas au bon format (YYYY-MM-DD)",
     };
