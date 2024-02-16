@@ -3,12 +3,20 @@ import { config } from './constants/config';
 import { ApodController } from './controllers/ApodController';
 import { ImagesSearchController } from './controllers/ImagesSearchController';
 import { NEOController } from './controllers/NEOController';
+import { errorHandler } from './middlewares/errorHandler';
+import { logRequest, logResponse } from './middlewares/logHandler';
 
 const apodController = new ApodController();
 const imagesSearchController = new ImagesSearchController();
 const app = express();
 
 const neoController = new NEOController();
+
+app.use(errorHandler);
+
+app.use(logRequest);
+app.use(logResponse);
+
 
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
